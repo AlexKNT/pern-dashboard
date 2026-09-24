@@ -6,8 +6,8 @@ The ground the whole product stands on. Nothing here is user facing, and every l
 Decide the stack and scaffold a runnable project, so every later slice builds on real structure rather than a guess.
 **Done when:** the stack and the deploy target are recorded in a spec, and the empty scaffold installs, builds and starts locally.
 - [x] Decide the stack (spec): `/architect stack & architecture`
-- [ ] Scaffold from the decision: `/develop stack & architecture`
-Spec [0001](../specs/0001-stack-architecture/index.md) · code (added by /develop)
+- [x] Scaffold from the decision: `/develop stack & architecture`
+Spec [0001](../specs/0001-stack-architecture/index.md) · code in `api/` and `web/`
 
 (_basis: `AGENTS.md` already carries a stack read off your two reference repos, but it was never decided in a spec. The spec is the one place a provider or host gets chosen, and `Beta` is the tier this foundation is normally held to._)
 

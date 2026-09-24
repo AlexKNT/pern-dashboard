@@ -1,0 +1,2 @@
+# Entities and value objects that enforce their own invariants.
+# Imports nothing from the other layers.
