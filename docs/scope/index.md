@@ -44,6 +44,7 @@ Out of scope for this pass, kept so the plan stays honest.
 - **Preview environment per pull request**: this pass has one hosted environment · needs a decision
 - **Assignments and grades**: coursework beyond shared materials · needs a decision
 - **Class messaging**: one thread per class · needs a decision
+- **Pipeline check for the compiler pin**: a test that asserts both apps resolve the same TypeScript build, so spec 0002's exact pin is checked rather than trusted · from spec 0002 · needs a decision
 
 ## Legend
 

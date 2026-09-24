@@ -1,42 +1,62 @@
 # 0002 · Coding standards & tooling
 
-**Status**: Assumed
+**Status**: Accepted
 **Date**: 2026-09-24
-**Authorized by**: AlexKNT, during /develop
 
-## Owed decision
+## Summary
 
-How to reconcile `api/`'s TypeScript 7.0.2 with ESLint's TypeScript plugin, whose latest release supports only `>=4.8.4 <6.1.0`. Installing `typescript-eslint` into `api/` fails with `ERESOLVE`, so the tooling feature cannot give the API a linter without resolving this. The undecided part is which side gives way: the API's compiler version, or npm's peer certainty.
-
-## Assumption built on
-
-- `api/` moves from TypeScript 7.0.2 to TypeScript 6, matching `web/`. Both apps then run one compiler generation, `typescript-eslint` installs inside its supported range, and no `--legacy-peer-deps`, `.npmrc` or `overrides` entry is needed. The alternative was to keep TypeScript 7 and install with the peer range ignored, which buys the newest compiler at the cost of an npm setting every future install depends on and a plugin that warns it does not support the version.
-- The pre commit hook is a plain `.githooks/pre-commit` shell script, activated with `core.hooksPath`, rather than husky plus lint-staged. Chosen by the engineer during this build. No new dependency, and git runs it through its own shell on Windows.
-- The pipeline runs lint, format, typecheck and tests as one GitHub Actions workflow with a job per app, and no root `package.json`, keeping the two package files that spec 0001 records.
-- The test step in the pipeline runs each app's `test` script only when one exists, so the pipeline is green today and picks up Vitest when `/test` adds it.
-
-## Code area
-
-- `api/package.json`, `api/eslint.config.js`, `api/.prettierignore`
-- `web/package.json`, `web/eslint.config.js`, `web/.prettierignore`
-- root `.prettierrc.json`, `.prettierignore`, `.editorconfig`, `.gitattributes`, `.githooks/pre-commit`
-- `.github/workflows/ci.yml`
-- `api/src/**`, `web/src/**` (reformatted, not rewritten)
+This project writes TypeScript, and the two apps in it are settled on the same version of it. The tooling feature recorded a provisional note that lowering the API from TypeScript 7.0.2 to 6 was the price of giving it a linter. This spec replaces that provisional note with the real decision and its reasoning: one exact pin for both apps, because a version that holds only until someone edits a range is not a decision. It settles the two smaller mismatches the same build left behind, the Node type packages and the compiler strictness flags, alongside it.
 
 ## Requirements
 
-Carried from the scope's `Done when` line for Coding standards & tooling:
+This is a decision, not a feature to build, so the criteria below are conditions the repository must satisfy rather than steps someone works through. Each is checkable with a command.
 
-- A commit runs lint, format and typecheck before it lands.
-- Lint, format, typecheck and the pipeline all run clean.
-- GitHub Actions runs lint, typecheck and tests on every push.
-- The API and the web app both have a linter.
-- Root `AGENTS.md` describes the real scaffold (that part belongs to `/audit` or `/sync`, see below).
+- **AC-1**: Both apps declare TypeScript 6.0.3 as an exact pin, so neither can drift to another build on its own.
+- **AC-2**: Both apps resolve to the same compiler build, and it is 6.0.3.
+- **AC-3**: Both apps declare `@types/node` on the Node 24 line, the line `.nvmrc` pins and the host runs.
+- **AC-4**: Both apps set `erasableSyntaxOnly`, so syntax that cannot be erased is refused in either app.
+- **AC-5**: `typescript-eslint` installs from the lockfiles in both apps with no peer override, no `--legacy-peer-deps` and no `.npmrc` entry.
+- **AC-6**: Lint, format check, typecheck and build pass in both apps with the pins in place.
 
-## Ratify
+## Decision
 
-This decision was recorded by /develop, not deliberated. Run `/architect coding standards & tooling`
-to deliberate and ratify it. Until then it stays flagged as an owed decision; it does not block marking the feature `done`.
+**Chosen option**: Option 1, one pinned compiler for both apps.
 
-Open point for ratification: the TypeScript downgrade in `api/` touches spec 0001's stack table
-(`Language`). If `/architect` prefers TypeScript 7 kept in the API, the ESLint wiring changes with it.
+Both apps pin `typescript` to exactly `6.0.3`, both pin `@types/node` on the Node 24 line, and both set `erasableSyntaxOnly`. What chose the major was the supported range of `typescript-eslint` (`>=4.8.4 <6.1.0`), not a preference for older software.
+
+**Implementation skills**: none. No installed skill governs the compiler version or the lint wiring, so this decision rests on the repository's own recorded choices and the ranges the packages declare.
+
+## Consequences
+
+**Positive**:
+
+- One compiler generation across the repo, so a syntax feature either compiles in both apps or in neither.
+- `typescript-eslint` sits inside the range it supports, so linting works in both apps with no npm setting to remember and no unsupported version warning to read past.
+- An exact pin means the build a developer runs and the build CI runs are the same one, and an upgrade becomes a deliberate commit rather than something that arrives with an unrelated install.
+- `@types/node` on the Node 24 line means the API's types describe the runtime the API actually has, not a newer one where APIs the code compiles against may not exist.
+- `erasableSyntaxOnly` in both apps rules out `enum`, parameter properties and runtime `namespace` before either app contains one, so moving a file between the apps stays cheap.
+
+**Negative / tradeoffs**:
+
+- Both apps sit one major behind the newest compiler. That is the price of a linter that covers both apps, because the lint plugin's supported range has not caught up with TypeScript 7.
+- An exact pin means patches and bug fixes arrive only when you bump it. Neither `npm install` nor `npm ci` will move it, which is the point, and also the obligation.
+- Aligning `@types/node` may surface type errors the newer Node types were hiding, so the API build has to prove the change rather than assume it.
+- `erasableSyntaxOnly` in the API forbids a small set of TypeScript features that are legal in a plain `tsc` build. The API uses none of them today.
+- The two apps keep separate `package.json` files and separate lockfiles, so nothing mechanically stops them drifting apart again. Review and this record are what hold them together.
+- Giving the API a linter at all was only possible by changing its compiler version, so this decision and the tooling install are not separable. Reverting one means revisiting the other.
+
+**Neutral**:
+
+- The compiler version is now a decision with a record, so the next person to open either `package.json` can see why it says 6.0.3 and what would have to change for that to move.
+- Spec 0001's stack table names TypeScript as the language without a version, so it does not conflict with this pin and needs no edit. The version lives here, in the newer and more specific spec.
+- `erasableSyntaxOnly` is a `tsconfig` flag, not a package version, so it appears in no lockfile and only shows up in a review of the two compiler configs.
+
+## Follow-up
+
+- [ ] Revisit the pin when `typescript-eslint` raises its supported TypeScript range above 6.1. That is the trigger for moving to TypeScript 7, and until then the pin is load bearing rather than stale.
+- [ ] Both apps declare `@types/node` on the Node 24 line, but may still resolve different patches inside it. Aligning the exact patch is tidying, not correctness, so treat it as optional.
+- [ ] No installed skill covers the TypeScript toolchain, so nothing in `## Agent skills` needed updating for this. If a TypeScript or ESLint skill is installed later, it belongs in root `AGENTS.md`, since it would govern every file.
+
+## Rationale
+
+Reasoning and options: see `rationale.md`.
