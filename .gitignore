@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+.env.local
+
+# Agent skills, restorable with: npx skills experimental_install
+.agents/
+.claude/
