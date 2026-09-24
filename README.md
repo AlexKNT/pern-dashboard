@@ -4,10 +4,10 @@ An academic management dashboard for a university. Admins run departments, subje
 
 This repository holds two apps:
 
-| Folder | What it is | Stack |
-|---|---|---|
-| `web/` | The dashboard the browser loads | React 19, Vite 8, TypeScript |
-| `api/` | The HTTP API that will serve data and auth | Express 5, TypeScript, Zod |
+| Folder | What it is                                 | Stack                        |
+| ------ | ------------------------------------------ | ---------------------------- |
+| `web/` | The dashboard the browser loads            | React 19, Vite 8, TypeScript |
+| `api/` | The HTTP API that will serve data and auth | Express 5, TypeScript, Zod   |
 
 In production the API also serves the built web app from one address. See `docs/specs/0001-stack-architecture/` for the full decision and `AGENTS.md` for the project rules.
 
@@ -25,6 +25,12 @@ Copy-Item api/.env.example api/.env
 
 `.env` is ignored by git and read once at startup. Every variable in it is validated before the API serves a request, so a missing value stops the process with a clear message instead of failing part way through.
 
+Then turn on the commit hook, once per clone:
+
+```
+git config core.hooksPath .githooks
+```
+
 ## Running locally
 
 Two terminals:
@@ -38,19 +44,39 @@ npm run dev --prefix web     # http://localhost:5173
 
 ## Commands
 
-| Command | Folder | What it does |
-|---|---|---|
-| `npm run dev` | `api/` | Start the API with reload on change |
-| `npm run typecheck` | `api/` | Type check without writing files |
-| `npm run build` | `api/` | Compile to `api/dist` |
-| `npm start` | `api/` | Run the compiled API |
-| `npm run dev` | `web/` | Start the Vite dev server |
+| Command             | Folder | What it does                           |
+| ------------------- | ------ | -------------------------------------- |
+| `npm run dev`       | `api/` | Start the API with reload on change    |
+| `npm run typecheck` | `api/` | Type check without writing files       |
+| `npm run build`     | `api/` | Compile to `api/dist`                  |
+| `npm start`         | `api/` | Run the compiled API                   |
+| `npm run dev`       | `web/` | Start the Vite dev server              |
 | `npm run typecheck` | `web/` | Type check the app and the Vite config |
-| `npm run build` | `web/` | Type check then build to `web/dist` |
-| `npm run preview` | `web/` | Serve the built web app |
-| `npm run lint` | `web/` | Run the template ESLint config |
+| `npm run build`     | `web/` | Type check then build to `web/dist`    |
+| `npm run preview`   | `web/` | Serve the built web app                |
 
-Linting, formatting, git hooks and the CI pipeline are installed by the tooling feature, so those scripts are not here yet.
+Both apps carry the same four checks, run from their own folder:
+
+| Command                | What it does                           |
+| ---------------------- | -------------------------------------- |
+| `npm run lint`         | ESLint over the app, TypeScript aware  |
+| `npm run format`       | Prettier, writing changes              |
+| `npm run format:check` | Prettier, reporting instead of writing |
+| `npm run typecheck`    | Type check without writing files       |
+
+Add `--prefix api` or `--prefix web` to run any of them from the repository root.
+
+## Checks
+
+`.githooks/pre-commit` runs on every commit. For each app that has staged files it formats those files, restages them, lints them, then type checks that app. `git commit --no-verify` skips it once.
+
+`.github/workflows/ci.yml` runs the same checks plus the test step on every push and pull request, one job per app, on the Node version in `.nvmrc`. The test step passes while no test script exists, and picks tests up as soon as `/test` adds them.
+
+## Formatting
+
+Prettier owns formatting, one config at the root, so no ESLint style rule is needed: double quotes, semicolons, a 100 column line, trailing commas. Run `npm run format --prefix api` or `--prefix web` after a change, and let the hook catch what you miss.
+
+`.gitattributes` keeps line endings at LF on every platform.
 
 ## Layout
 
