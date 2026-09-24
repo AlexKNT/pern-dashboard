@@ -11,7 +11,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 
 | # | Feature | Phase | Status |
 |---|---------|-------|--------|
-| 1 | Stack & architecture | Foundation | planned |
+| 1 | Stack & architecture | Foundation | in-progress |
 | 2 | Coding standards & tooling | Foundation | in-progress |
 | 3 | Data model | Foundation | planned |
 | 4 | Design system & UI foundation | Foundation | planned |
@@ -32,7 +32,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 
 ## Epics
 
-- **Foundations** ([foundations.md](foundations.md)): 6 features, 1 in progress. The ground everything else stands on: stack, tooling, data model, design system, translations, deployment.
+- **Foundations** ([foundations.md](foundations.md)): 6 features, 2 in progress. The ground everything else stands on: stack, tooling, data model, design system, translations, deployment.
 - **Academics** ([academics.md](academics.md)): 6 features, all planned. The enrollment core and the academic structure around it.
 - **Platform** ([platform.md](platform.md)): 6 features, all planned. The reporting, accountability and reach layers, plus the closing accessibility pass.
 

@@ -2,12 +2,12 @@
 
 The ground the whole product stands on. Nothing here is user facing, and every later slice depends on it, so it comes first. (`basis: foundations before features, cheaper foundation before what depends on it`)
 
-### 1. Stack & architecture · needs a decision · Beta
+### 1. Stack & architecture · in-progress · Beta
 Decide the stack and scaffold a runnable project, so every later slice builds on real structure rather than a guess.
 **Done when:** the stack and the deploy target are recorded in a spec, and the empty scaffold installs, builds and starts locally.
-- [ ] Decide the stack (spec): `/architect stack & architecture`
+- [x] Decide the stack (spec): `/architect stack & architecture`
 - [ ] Scaffold from the decision: `/develop stack & architecture`
-Spec (added by /architect) · code (added by /develop)
+Spec [0001](../specs/0001-stack-architecture/index.md) · code (added by /develop)
 
 (_basis: `AGENTS.md` already carries a stack read off your two reference repos, but it was never decided in a spec. The spec is the one place a provider or host gets chosen, and `Beta` is the tier this foundation is normally held to._)
 
