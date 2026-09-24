@@ -1,0 +1,10 @@
+# Dependencies and generated output are never formatted.
+node_modules
+dist
+coverage
+*.tsbuildinfo
+package-lock.json
+
+# Agent skills are restored, not edited.
+.agents
+.claude

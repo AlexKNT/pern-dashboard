@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# Runs the project's checks on what you are about to commit.
+#
+# Activated with:  git config core.hooksPath .githooks
+# Git runs this through its own shell, so it works the same on Windows, macOS and Linux.
+#
+# For each app that has staged files it formats those files, restages them,
+# lints them, then type checks the app. Type checking cannot be limited to single
+# files, so it runs over the whole app. Skip the hook once with `git commit --no-verify`.
+
+set -e
+
+root=$(git rev-parse --show-toplevel)
+cd "$root"
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+if [ -z "$staged" ]; then
+  exit 0
+fi
+
+status=0
+
+for app in api web; do
+  # Staged files inside this app, with the leading folder removed.
+  files=$(printf '%s\n' "$staged" | grep "^$app/" | sed "s|^$app/||")
+  if [ -z "$files" ]; then
+    continue
+  fi
+
+  if [ ! -d "$app/node_modules" ]; then
+    printf '%s\n' "Cannot check $app: run \`npm install --prefix $app\` first."
+    status=1
+    continue
+  fi
+
+  echo "==> $app"
+
+  # Format the staged files, then restage whatever changed.
+  printf '%s\n' "$files" | (cd "$app" && xargs sh node_modules/.bin/prettier --write --ignore-unknown)
+  printf '%s\n' "$files" | (cd "$app" && xargs git add --)
+
+  # Lint the staged TypeScript files.
+  source=$(printf '%s\n' "$files" | grep -E '\.(ts|tsx)$' || true)
+  if [ -n "$source" ]; then
+    printf '%s\n' "$source" | (cd "$app" && xargs sh node_modules/.bin/eslint --max-warnings 0) || status=1
+  fi
+
+  # Type check the whole app, since a type is only proven in the project it compiles in.
+  (cd "$app" && npm run --silent typecheck) || status=1
+done
+
+if [ "$status" -ne 0 ]; then
+  printf '\n%s\n' "Checks failed. Nothing was committed."
+  exit 1
+fi
+
+printf '\n%s\n' "Checks passed."

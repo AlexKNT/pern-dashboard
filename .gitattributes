@@ -1,0 +1,16 @@
+# One line ending everywhere, so a Windows checkout and a Linux CI run see the same files.
+* text=auto eol=lf
+
+# Windows only files, kept in their native form.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files git should never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary

@@ -9,5 +9,5 @@ export function App() {
       <h1>PERN Admin Dashboard</h1>
       <p>Scaffold running. Screens arrive with the features that own them.</p>
     </main>
-  )
+  );
 }
