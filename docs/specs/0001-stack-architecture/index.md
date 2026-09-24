@@ -1,7 +1,7 @@
 # 0001. Decoupled TypeScript stack on managed platforms
 
 **Date**: 2026-09-24
-**Status**: In Progress
+**Status**: Accepted
 
 ## Summary
 

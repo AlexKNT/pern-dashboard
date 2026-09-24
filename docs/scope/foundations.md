@@ -2,7 +2,7 @@
 
 The ground the whole product stands on. Nothing here is user facing, and every later slice depends on it, so it comes first. (`basis: foundations before features, cheaper foundation before what depends on it`)
 
-### 1. Stack & architecture · in-progress · Beta
+### 1. Stack & architecture · done · Beta
 Decide the stack and scaffold a runnable project, so every later slice builds on real structure rather than a guess.
 **Done when:** the stack and the deploy target are recorded in a spec, and the empty scaffold installs, builds and starts locally.
 - [x] Decide the stack (spec): `/architect stack & architecture`
