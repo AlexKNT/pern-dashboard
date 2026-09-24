@@ -17,7 +17,7 @@ Capture the conventions and install the enforcement, so every later slice is wri
 - [x] Capture conventions + tooling choices: `/audit`
 - [x] Install the tooling: `/develop tooling`
 - [ ] Check it runs clean: `/test`
-Spec [0002](../specs/0002-coding-standards-tooling.md) · assumed decision, awaiting ratification · lint, format, typecheck and pipeline in `api/eslint.config.js`, `web/eslint.config.js`, `.prettierrc.json`, `.githooks/pre-commit`, `.github/workflows/ci.yml`
+Spec [0002](../specs/0002-coding-standards-tooling/index.md) · assumed decision, awaiting ratification · lint, format, typecheck and pipeline in `api/eslint.config.js`, `web/eslint.config.js`, `.prettierrc.json`, `.githooks/pre-commit`, `.github/workflows/ci.yml`
 
 (_basis: the audit already ran and captured the choices, so it is ticked. It ran before the scaffold existed, so the commands section is still empty and gets refreshed once the project lands._)
 

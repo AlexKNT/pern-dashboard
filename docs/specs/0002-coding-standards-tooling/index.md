@@ -17,8 +17,8 @@ How to reconcile `api/`'s TypeScript 7.0.2 with ESLint's TypeScript plugin, whos
 
 ## Code area
 
-- `api/package.json`, `api/eslint.config.js`, `api/prettierignore`
-- `web/package.json`, `web/eslint.config.js`, `web/prettierignore`
+- `api/package.json`, `api/eslint.config.js`, `api/.prettierignore`
+- `web/package.json`, `web/eslint.config.js`, `web/.prettierignore`
 - root `.prettierrc.json`, `.prettierignore`, `.editorconfig`, `.gitattributes`, `.githooks/pre-commit`
 - `.github/workflows/ci.yml`
 - `api/src/**`, `web/src/**` (reformatted, not rewritten)
