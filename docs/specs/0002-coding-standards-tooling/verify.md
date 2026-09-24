@@ -22,18 +22,21 @@ _Steps derived from spec 0002's requirements and the scope's Done when line. `/c
 - [x] Write `const bad: any = 1` in `web/src/App.tsx`, `git add` it, `git commit` → `@typescript-eslint/no-explicit-any` fails the hook → requirement: the project's no `any` rule is enforced
 - [x] Write a line with a missing semicolon in `web/src/App.tsx`, `git add` it, `git commit` → the hook reformats the file, restages it, and the commit lands with the semicolon added → requirement: format on staged files
 - [x] Write `console.log("hi")` followed by a `TODO` comment in `api/src/index.ts`, `git add` it, `git commit` → the commit is refused with the `no-warning-comments` warning and the `--max-warnings 0` message → requirement: warnings do not slip through
-- [ ] Push the branch → GitHub shows two jobs, `API` and `Web`, both green, each running install, lint, format, typecheck and test → requirement: the pipeline runs on every push
-- [ ] Open a pull request → the same two checks appear against it → requirement: the pipeline covers pull requests
+
+## Pipeline, on GitHub
+
+- [x] Push to `main`: run [CI #1](https://github.com/AlexKNT/pern-dashboard/actions/runs/36047887534), workflow `CI`, on commit `ef5838e`, finished in 43s with both jobs green. `API` 25s ran set up, checkout, setup-node, install, lint, format, typecheck, test, all succeeded. `Web` 19s ran the same eight steps and succeeded. → requirement: the pipeline runs on every push
+- [ ] Open a pull request → the same two checks appear against it. No pull request exists yet, so this is unproven → requirement: the pipeline covers pull requests
 
 ## Requirement coverage
 
 - "A commit runs lint, format and typecheck before it lands" → the four hook steps above
-- "Lint, format, typecheck and the pipeline run clean" → the first seven command steps, plus the two push steps
-- "GitHub Actions runs lint, typecheck and tests on every push" → the push and pull request steps
+- "Lint, format, typecheck and the pipeline run clean" → the first seven command steps, plus the green run on `main`
+- "GitHub Actions runs lint, typecheck and tests on every push" → the push step, proven by CI #1. The pull request step stays open
 - "The API and the web app both have a linter" → the two `lint` steps
 - "Root `AGENTS.md` describes the real scaffold" → not covered here, it belongs to `/audit` or `/sync`
 
 Not verified by these steps, and known:
 
-- The pipeline has never run on GitHub. The workflow's shape is right, the install command works from the lockfiles, but only a push can prove the runner agrees.
-- `/test` has not added a test script, so the test steps prove the pipeline tolerates an absent script, not that tests run.
+- The pull request trigger has never fired, because no pull request exists. The push run proves the workflow, the runner and every step; it does not prove the `pull_request` event.
+- `/test` has not added a test script, so the test steps prove the pipeline tolerates an absent script, not that tests run. In the green run the `Test` step showed only its command echo, which is `npm` finding no `test` script.
