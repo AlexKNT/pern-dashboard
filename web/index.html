@@ -4,6 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PERN Admin Dashboard</title>
+    <meta
+      name="description"
+      content="Academic management for departments, subjects, classes and enrolment."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      /*
+        Apply the stored theme before anything paints, so a page loaded in dark does
+        not flash light on the way in. This runs the same resolve as
+        `src/lib/theme.ts`: stored preference, then the system colour scheme when the
+        preference is `system`, defaulting to `system` when the key is unset or
+        unreadable. Change one without the other and the two disagree, which is what
+        causes the flash.
+      */
+      (function () {
+        var KEY = "pern-dashboard-theme";
+        var preference = "system";
+        try {
+          var stored = window.localStorage.getItem(KEY);
+          if (stored === "light" || stored === "dark" || stored === "system") {
+            preference = stored;
+          }
+        } catch (error) {
+          /* Storage blocked or unreadable: fall through to system. */
+        }
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var resolved = preference === "system" ? (prefersDark ? "dark" : "light") : preference;
+        var root = document.documentElement;
+        root.classList.toggle("dark", resolved === "dark");
+        root.style.colorScheme = resolved;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

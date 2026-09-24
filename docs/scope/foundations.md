@@ -32,15 +32,15 @@ The core entities every feature builds on: accounts and roles, departments, subj
 The visual language, layout primitives and base components, so three role experiences feel like one product and meet the accessibility bar.
 **Done when:** `design.md` covers type, colour, spacing and components, and the base components handle focus, keyboard use and reduced motion.
 - [x] Design it (spec): `/architect design system & UI foundation`
-- [ ] Build it: `/develop design system & UI foundation`
-  - [ ] Tokens, `design.md` and the toolchain, including the contrast check (AC-1, AC-2, AC-3, AC-17)
-  - [ ] Theme provider, first paint script and the switcher (AC-4, AC-5)
-  - [ ] The component set with `EmptyState`, `ErrorState`, `DataTable` and the error boundary (AC-6, AC-7, AC-15, AC-16)
-  - [ ] The shell: providers, routing, `AppShell`, sidebar, header, breadcrumbs, sign in placeholder and the Playwright checks (AC-10, AC-11, AC-12, AC-20)
-  - [ ] Role aware navigation, the command palette and the palette lint rule (AC-13, AC-14, AC-18)
-  - [ ] Behaviour tests throughout (AC-8, AC-9, AC-19)
+- [x] Build it: `/develop design system & UI foundation`
+  - [x] Tokens, `design.md` and the toolchain, including the contrast check (AC-1, AC-2, AC-3, AC-17)
+  - [x] Theme provider, first paint script and the switcher (AC-4, AC-5)
+  - [x] The component set with `EmptyState`, `ErrorState`, `DataTable` and the error boundary (AC-6, AC-7, AC-15, AC-16)
+  - [x] The shell: providers, routing, `AppShell`, sidebar, header, breadcrumbs, sign in placeholder and the Playwright checks (AC-10, AC-11, AC-12, AC-20)
+  - [x] Role aware navigation, the command palette and the palette lint rule (AC-13, AC-14, AC-18)
+  - [x] Behaviour tests throughout (AC-8, AC-9, AC-19)
 - [ ] Verify it: `/check verify design system & UI foundation`
-Spec [0003](../specs/0003-design-system-ui-foundation/index.md)
+Spec [0003](../specs/0003-design-system-ui-foundation/index.md) · code in `web/` (`src/index.css`, `src/components/`, `src/lib/`, `src/providers/`, `src/pages/`, `scripts/check-contrast.ts`, `eslint-rules/no-raw-palette-class.js`, `e2e/shell.spec.ts`), recorded in `web/design.md`
 
 (_basis: the visual language every later screen depends on, so it comes before the features that assemble pages. This pass also stands up the Refine shell, because a screen needs a layout to render into and the shell is mostly configuration. The command palette and toasts came in on request, which is why the build is sliced._)
 

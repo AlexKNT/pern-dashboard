@@ -1,7 +1,7 @@
 # 0003. Design system, UI foundation and the admin shell
 
 **Date**: 2026-09-24
-**Status**: Proposed
+**Status**: Accepted
 
 ## Summary
 
@@ -161,39 +161,39 @@ Ordered as Tracer Bullet slices: the first slice stands the thinnest end to end 
 
 **Slice 1, the thin thread (AC-1, AC-2, AC-3, AC-17)**
 
-1. Install the toolchain and wire the `@` alias to `web/src` in `vite.config.ts` and `tsconfig.app.json`, initialise the shadcn CLI on the `zinc` base colour, add the Google Fonts link to `web/index.html`, and confirm `lint`, `typecheck` and `build` still pass. Satisfies **AC-17**.
-2. Declare the raw palette and the full semantic role set for light and dark in `web/src/index.css`, with the `@theme inline` mapping into Tailwind and the spacing, type and radius scales. Satisfies **AC-2**, **AC-3**.
-3. Write `web/design.md`: the two token layers with their value tables, the scales, the font choice, the component inventory with usage and anti usage, and the accessibility rules. Satisfies **AC-1**.
-4. Add the contrast check over the token pairs for both themes, so a role that fails AA fails a command. Satisfies **AC-3**.
-5. Add the `prefers-reduced-motion` and focus visibility base styles in `web/src/index.css`, so every component inherits them. Base styles only; the per component behaviour lands in Slice 3. Satisfies **AC-9**, **AC-8**.
+1. [x] Install the toolchain and wire the `@` alias to `web/src` in `vite.config.ts` and `tsconfig.app.json`, initialise the shadcn CLI on the `zinc` base colour, add the Google Fonts link to `web/index.html`, and confirm `lint`, `typecheck` and `build` still pass. Satisfies **AC-17**.
+2. [x] Declare the raw palette and the full semantic role set for light and dark in `web/src/index.css`, with the `@theme inline` mapping into Tailwind and the spacing, type and radius scales. Satisfies **AC-2**, **AC-3**.
+3. [x] Write `web/design.md`: the two token layers with their value tables, the scales, the font choice, the component inventory with usage and anti usage, and the accessibility rules. Satisfies **AC-1**.
+4. [x] Add the contrast check over the token pairs for both themes, so a role that fails AA fails a command. Satisfies **AC-3**.
+5. [x] Add the `prefers-reduced-motion` and focus visibility base styles in `web/src/index.css`, so every component inherits them. Base styles only; the per component behaviour lands in Slice 3. Satisfies **AC-9**, **AC-8**.
 
 **Slice 2, theme (AC-4, AC-5)**
 
-1. Write `web/src/lib/theme.ts` (read, write and resolve, with the media query listener) and `theme-provider.tsx` over it. Satisfies **AC-4**.
-2. Add the inline script to `web/index.html` that runs the same resolve before the bundle loads, and the `theme-switcher.tsx` dropdown select. Satisfies **AC-5**, **AC-4**.
-3. Add the tests for the resolve and persist logic, including corrupt stored values, an unset key, and a system preference change while open. Satisfies **AC-19**, **AC-4**.
+1. [x] Write `web/src/lib/theme.ts` (read, write and resolve, with the media query listener) and `theme-provider.tsx` over it. Satisfies **AC-4**.
+2. [x] Add the inline script to `web/index.html` that runs the same resolve before the bundle loads, and the `theme-switcher.tsx` dropdown select. Satisfies **AC-5**, **AC-4**.
+3. [x] Add the tests for the resolve and persist logic, including corrupt stored values, an unset key, and a system preference change while open. Satisfies **AC-19**, **AC-4**.
 
 **Slice 3, the components (AC-6, AC-7, AC-15, AC-16)**
 
-1. Install the base component set through the shadcn CLI and review each one against `design.md` (focus ring, motion, labels). Satisfies **AC-6**.
-2. Build `EmptyState`, `ErrorState` and `DataTable` to their defined prop signatures, with sorting and pagination through `@refinedev/react-table`, and `error-boundary.tsx`. Satisfies **AC-7**, **AC-15**, **AC-16**.
-3. Wire Refine's notification provider so mutation failures land as toasts. Satisfies **AC-16**.
-4. Add the reachability and labelling tests across the interactive set, and the reduced motion and focus behaviour these components own. Satisfies **AC-19**, **AC-8**, **AC-9**.
+1. [x] Install the base component set through the shadcn CLI and review each one against `design.md` (focus ring, motion, labels). Satisfies **AC-6**.
+2. [x] Build `EmptyState`, `ErrorState` and `DataTable` to their defined prop signatures, with sorting and pagination through `@refinedev/react-table`, and `error-boundary.tsx`. Satisfies **AC-7**, **AC-15**, **AC-16**.
+3. [x] Wire Refine's notification provider so mutation failures land as toasts. Satisfies **AC-16**.
+4. [x] Add the reachability and labelling tests across the interactive set, and the reduced motion and focus behaviour these components own. Satisfies **AC-19**, **AC-8**, **AC-9**.
 
 **Slice 4, the shell (AC-10, AC-11, AC-12)**
 
-1. Write `data-provider.ts` reading `VITE_API_URL` and `auth-provider.ts` reading the session endpoint, then wire Refine 5 with the `@refinedev/react-router` bindings, the `/sign-in` placeholder page, the signed out redirect, and the `/` route in `App.tsx`. Satisfies **AC-10**, **AC-17**.
-2. Build `AppShell` (owner of the `sidebar_state` cookie), `SidebarNav` and `PageHeader`, with the collapsible icon sidebar, the persisted state and the sheet below 768 pixels. Satisfies **AC-11**, **AC-12**, **AC-7**.
-3. Build `user-menu.tsx`, the breadcrumbs and `not-found.tsx`, and confirm the signed out path end to end. Satisfies **AC-12**, **AC-10**.
-4. Add the shell tests: render at `/`, signed out redirect to `/sign-in`, sidebar keyboard toggle and focus return. Satisfies **AC-19**, **AC-10**, **AC-11**.
-5. Add `web/e2e/shell.spec.ts` for the checks that need a real browser: the 360 pixel viewport, keyboard traversal and focus return, and reduced motion. Satisfies **AC-20**, **AC-8**, **AC-9**.
+1. [x] Write `data-provider.ts` reading `VITE_API_URL` and `auth-provider.ts` reading the session endpoint, then wire Refine 5 with the `@refinedev/react-router` bindings, the `/sign-in` placeholder page, the signed out redirect, and the `/` route in `App.tsx`. Satisfies **AC-10**, **AC-17**.
+2. [x] Build `AppShell` (owner of the `sidebar_state` cookie), `SidebarNav` and `PageHeader`, with the collapsible icon sidebar, the persisted state and the sheet below 768 pixels. Satisfies **AC-11**, **AC-12**, **AC-7**.
+3. [x] Build `user-menu.tsx`, the breadcrumbs and `not-found.tsx`, and confirm the signed out path end to end. Satisfies **AC-12**, **AC-10**.
+4. [x] Add the shell tests: render at `/`, signed out redirect to `/sign-in`, sidebar keyboard toggle and focus return. Satisfies **AC-19**, **AC-10**, **AC-11**.
+5. [x] Add `web/e2e/shell.spec.ts` for the checks that need a real browser: the 360 pixel viewport, keyboard traversal and focus return, and reduced motion. Satisfies **AC-20**, **AC-8**, **AC-9**.
 
 **Slice 5, role aware navigation and the palette (AC-13, AC-14, AC-18, AC-20)**
 
-1. Write `web/src/lib/navigation.ts` with the `Role` type, the destinations and their allowed roles, and the filter that builds the rendered menu from the session role, including the no role case. Satisfies **AC-14**.
-2. Build `command-palette.tsx` over the same declaration, including `Cmd+K` and `Ctrl+K`, the escape behaviour and the focus return. Satisfies **AC-13**.
-3. Write the local ESLint rule `no-raw-palette-class` in `web/eslint-rules/`, register it in `web/eslint.config.js`, and allow the declaration site in `web/src/index.css`. Satisfies **AC-18**.
-4. Add the rule's own test: a raw palette class fails, a semantic class passes, and the index file is exempt. Satisfies **AC-18**, **AC-19**.
+1. [x] Write `web/src/lib/navigation.ts` with the `Role` type, the destinations and their allowed roles, and the filter that builds the rendered menu from the session role, including the no role case. Satisfies **AC-14**.
+2. [x] Build `command-palette.tsx` over the same declaration, including `Cmd+K` and `Ctrl+K`, the escape behaviour and the focus return. Satisfies **AC-13**.
+3. [x] Write the local ESLint rule `no-raw-palette-class` in `web/eslint-rules/`, register it in `web/eslint.config.js`, and allow the declaration site in `web/src/index.css`. Satisfies **AC-18**.
+4. [x] Add the rule's own test: a raw palette class fails, a semantic class passes, and the index file is exempt. Satisfies **AC-18**, **AC-19**.
 
 ## Consequences
 
@@ -226,6 +226,11 @@ Ordered as Tracer Bullet slices: the first slice stands the thinnest end to end 
 
 ## Follow-up
 
+- [ ] **Deviation from the decided toolchain, recorded during the build.** `@tanstack/react-table` was pinned to v8 rather than the current v9, because `@refinedev/react-table`'s published build is written against v8's API and does not run on v9. `react-router` was pinned to v7 for the same reason: `@refinedev/react-router` resolves v7. Revisit both when Refine ships v9 and v8 support.
+- [ ] **Deviation, the command palette.** The palette is `web/src/components/command-palette-dialog.tsx`, written here, rather than the registry's `command` component over `cmdk`. `cmdk` fails on this project's React version: the command root creates its store with `useMemo` and a child reads it through `useSyncExternalStore` on the first render, so it throws `Cannot read properties of undefined (reading 'subscribe')`. Reproduced with `cmdk` 1.1.1 and 1.0.4 in isolation. The replacement is a search field over a filtered list of buttons, which keeps the keyboard, focus and screen reader behaviour the acceptance criteria ask for. Revisit if `cmdk` ships a fix.
+- [ ] **Deviation, the signed out guard.** The redirect is `RequireSession` in `web/src/components/sign-in-guard.tsx`, not Refine's `Authenticated`. That guard renders nothing while the session query is in flight, which is a blank screen rather than a redirect. The replacement is a few lines and takes the redirect decision explicitly.
+- [ ] The `Authenticated` guard's behaviour is worth reporting upstream, and the `cmdk` failure with it. Both cost real debugging time and neither is visible from the documentation.
+- [ ] `@refinedev/react-table` imports `lodash/isEqual` without a file extension, which Node's ESM resolver rejects. Vitest inlines that one package to work around it (`web/vitest.config.ts`). Worth a follow-up if it ever affects the production bundle; it does not today, because Vite resolves it at build time.
 - [ ] The Google Fonts link in `web/index.html` is an external request and a small privacy consideration. If that matters later, a self hosted variable font removes it without changing any component.
 - [ ] The auth provider is a stub until the accounts feature lands. When it does, revisit `auth-provider.ts` and the signed out redirect rather than rebuilding the shell.
 - [ ] The real per role destinations are invented here to prove the filter works. The core enrollment loop and the later features own the real list; `navigation.ts` is the one place to change.
