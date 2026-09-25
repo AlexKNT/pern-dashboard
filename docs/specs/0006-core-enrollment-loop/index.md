@@ -1,7 +1,7 @@
 # 0006. Core enrollment loop (the walking skeleton)
 
 **Date**: 2026-09-25
-**Status**: Proposed
+**Status**: Accepted
 
 ## Summary
 

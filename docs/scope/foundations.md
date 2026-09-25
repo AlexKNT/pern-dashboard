@@ -61,6 +61,7 @@ Locale plumbing and the first translated screens, in place before the screens mu
 ### 6. Deployment & environments · needs a decision
 Both apps hosted in one environment, with secrets managed, failures reported and uptime watched.
 **Done when:** a push to the main branch deploys the API and the web app, they reach a hosted database, a failing check blocks the deploy, and a thrown API error shows up in the monitoring dashboard with an alert.
+Carries AC-9 from spec [0006](../specs/0006-core-enrollment-loop/index.md): the full enrollment loop on the deployed apps, deferred here until a deployment exists.
 - [ ] Design it (spec): `/architect deployment & environments`
 
 (_basis: you chose to deploy from day one, so the deployed path belongs to the skeleton, not to a later phase. Error monitoring and uptime alerts fold in here because they are the same environment decision._)

@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 import {
+  check,
   index,
   integer,
   pgTable,
@@ -120,16 +121,24 @@ export const enrollments = pgTable(
     studentId: uuid("student_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
+    status: text("status").notNull().default("active"),
     joinedAt: timestamp("joined_at", { withTimezone: true }).notNull().defaultNow(),
     leftAt: timestamp("left_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
-    uniqueIndex("enrollments_active_student_key")
+    // One current enrollment per class and student: active or waitlisted, never two.
+    uniqueIndex("enrollments_current_student_key")
       .on(table.classId, table.studentId)
-      .where(sql`${table.leftAt} is null`),
+      .where(sql`${table.status} in ('active', 'waitlisted')`),
     index("enrollments_student_id_idx").on(table.studentId),
+    check("enrollments_status_check", sql`${table.status} in ('active', 'waitlisted', 'left')`),
+    // Status and left_at cannot drift: a left row has left_at set, and only it does.
+    check(
+      "enrollments_status_left_at_check",
+      sql`(${table.status} = 'left') = (${table.leftAt} is not null)`,
+    ),
   ],
 );
 
