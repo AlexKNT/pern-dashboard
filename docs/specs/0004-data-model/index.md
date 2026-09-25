@@ -1,7 +1,7 @@
 # 0004. Core relational data model for the whole product
 
 **Date**: 2026-09-25
-**Status**: Proposed
+**Status**: In Progress
 
 ## Summary
 
@@ -118,12 +118,12 @@ This feature ships no HTTP endpoints. The schema is the surface later slices rea
 
 ## Build plan
 
-1. Add the database dependencies (Drizzle, drizzle-kit, the Postgres driver) and wire DATABASE_URL into the environment validation so a missing value fails at startup, satisfies **AC-1**.
-2. Define the Better Auth tables with the Drizzle adapter and add role to the user table, satisfies **AC-3**.
-3. Define the domain tables with their foreign keys, unique constraints and indexes, satisfies **AC-2**, **AC-5**, **AC-6**, **AC-7**.
-4. Generate the migration with drizzle-kit and apply it to a fresh Neon branch, satisfies **AC-1**, **AC-4**.
-5. Write the test that applies the migration to a throwaway branch and asserts the uniqueness and foreign key constraints, satisfies **AC-2**, **AC-5**.
-6. Add the audit retention prune query for entries older than 365 days, satisfies **AC-6**.
+- [x] Add the database dependencies (Drizzle, drizzle-kit, the Postgres driver) and wire DATABASE_URL into the environment validation so a missing value fails at startup, satisfies **AC-1**.
+- [x] Define the Better Auth tables with the Drizzle adapter and add role to the user table, satisfies **AC-3**.
+- [x] Define the domain tables with their foreign keys, unique constraints and indexes, satisfies **AC-2**, **AC-5**, **AC-6**, **AC-7**.
+- [x] Generate the migration with drizzle-kit and apply it to a fresh Neon branch, satisfies **AC-1**, **AC-4**.
+- [x] Write the test that applies the migration to a throwaway branch and asserts the uniqueness and foreign key constraints, satisfies **AC-2**, **AC-5**.
+- [x] Add the audit retention prune query for entries older than 365 days, satisfies **AC-6**.
 
 ## Consequences
 
