@@ -13,7 +13,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 |---|---------|-------|--------|
 | 1 | Stack & architecture | Foundation | done |
 | 2 | Coding standards & tooling | Foundation | in-progress |
-| 3 | Data model | Foundation | planned |
+| 3 | Data model | Foundation | in-progress |
 | 4 | Design system & UI foundation | Foundation | in-progress |
 | 5 | Translations foundation | Foundation | planned |
 | 6 | Deployment & environments | Foundation | planned |
@@ -45,6 +45,7 @@ Out of scope for this pass, kept so the plan stays honest.
 - **Assignments and grades**: coursework beyond shared materials · needs a decision
 - **Class messaging**: one thread per class · needs a decision
 - **Pipeline check for the compiler pin**: a test that asserts both apps resolve the same TypeScript build, so spec 0002's exact pin is checked rather than trusted · from spec 0002 · needs a decision
+- **Directory filter by department**: if the directory slice ever needs to filter people by department, a person-to-department link is a small additive migration · from spec 0004
 
 ## Legend
 
