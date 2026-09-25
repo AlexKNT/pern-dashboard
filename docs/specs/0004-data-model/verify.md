@@ -26,3 +26,11 @@ Still open, and not part of this build:
 
 - The API token table for the public API slice (feature 15) arrives in its own spec.
 - PostHog holds product analytics events, not this schema.
+
+## Concrete steps after the build
+
+- [ ] `npm run db:migrate` in `api/` with the direct Neon URL in `DATABASE_URL` → applies `drizzle/0000_*.sql` with no errors → AC-1
+- [ ] Confirm the schema is live: 13 tables and 15 foreign keys exist on the branch → AC-1, AC-4
+- [ ] `TEST_DATABASE_URL=<throwaway branch> npm test` in `api/` → 9 tests pass (2 uuid unit tests, 7 constraint tests) → AC-2, AC-5, AC-6
+- [ ] Query `user` → `name`, `image` and `role` present, with the admin/teacher/student check constraint → AC-3
+- [ ] Review the migration SQL → uuid primary keys, snake_case names, `timestamp with time zone`, `archived_at` soft archive, trigram indexes on `user.name` and `user.email` → AC-5, AC-7

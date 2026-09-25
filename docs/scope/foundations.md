@@ -25,13 +25,13 @@ Spec [0002](../specs/0002-coding-standards-tooling/index.md) · decision ratifie
 The core entities every feature builds on: accounts and roles, departments, subjects, classes, sessions, enrollments and join codes, materials, audit entries.
 **Done when:** the schema, keys and relationships support every slice below without a breaking migration later.
 - [x] Design it (spec): `/architect data model`
-- [ ] Build it: `/develop data model`
-  - [ ] Database wiring and auth tables (deps, DATABASE_URL, Better Auth tables with role) (AC-1, AC-3)
-  - [ ] Domain tables with constraints and indexes (AC-2, AC-5, AC-6, AC-7)
-  - [ ] Migration generated and applied to a fresh branch (AC-1, AC-4)
-  - [ ] Constraint tests and the audit prune query (AC-2, AC-5, AC-6)
+- [x] Build it: `/develop data model`
+  - [x] Database wiring and auth tables (deps, DATABASE_URL, Better Auth tables with role) (AC-1, AC-3)
+  - [x] Domain tables with constraints and indexes (AC-2, AC-5, AC-6, AC-7)
+  - [x] Migration generated and applied to a fresh branch (AC-1, AC-4)
+  - [x] Constraint tests and the audit prune query (AC-2, AC-5, AC-6)
 - [ ] Verify it: `/check verify data model`
-Spec [0004](../specs/0004-data-model/index.md)
+Spec [0004](../specs/0004-data-model/index.md) · code in `api/src/infrastructure/db/` (`schema/`, `client.ts`, `audit-prune.ts`), `api/drizzle/`, `api/drizzle.config.ts`
 
 (_basis: a wrong data model is the costliest thing to redo, so this one is never skipped or folded into another feature._)
 
@@ -61,6 +61,7 @@ Locale plumbing and the first translated screens, in place before the screens mu
 ### 6. Deployment & environments · needs a decision
 Both apps hosted in one environment, with secrets managed, failures reported and uptime watched.
 **Done when:** a push to the main branch deploys the API and the web app, they reach a hosted database, a failing check blocks the deploy, and a thrown API error shows up in the monitoring dashboard with an alert.
+Carries AC-9 from spec [0006](../specs/0006-core-enrollment-loop/index.md): the full enrollment loop on the deployed apps, deferred here until a deployment exists.
 - [ ] Design it (spec): `/architect deployment & environments`
 
 (_basis: you chose to deploy from day one, so the deployed path belongs to the skeleton, not to a later phase. Error monitoring and uptime alerts fold in here because they are the same environment decision._)

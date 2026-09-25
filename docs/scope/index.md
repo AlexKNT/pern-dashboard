@@ -17,7 +17,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 4 | Design system & UI foundation | Foundation | in-progress |
 | 5 | Translations foundation | Foundation | planned |
 | 6 | Deployment & environments | Foundation | planned |
-| 7 | Core enrollment loop | Skeleton | planned |
+| 7 | Core enrollment loop | Skeleton | done |
 | 8 | Accounts that hold up | Slice 2 | planned |
 | 9 | Departments & subjects | Slice 3 | planned |
 | 10 | Class scheduling & capacity | Slice 4 | planned |

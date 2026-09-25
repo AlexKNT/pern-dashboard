@@ -8,6 +8,16 @@ import { z } from "zod";
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().int().positive().default(3000),
+  DATABASE_URL: z.string().min(1),
+  DATABASE_URL_UNPOOLED: z.string().min(1).optional(),
+  // Better Auth: the signing secret and the origin the browser reaches the API on.
+  BETTER_AUTH_SECRET: z.string().min(32),
+  BETTER_AUTH_URL: z.string().url(),
+  // The origin of the web app in development, trusted for cross origin sign in.
+  WEB_ORIGIN: z.string().url().default("http://localhost:5173"),
+  // Optional providers. RESEND only mails in production; ARCJET rate limits when set.
+  RESEND_API_KEY: z.string().min(1).optional(),
+  ARCJET_KEY: z.string().min(1).optional(),
 });
 
 /** Reads `.env` when one exists, then validates and freezes the environment. */

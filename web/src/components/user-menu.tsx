@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { useLogout } from "@refinedev/core";
 import { ChevronsUpDownIcon, LogOutIcon, UserIcon } from "lucide-react";
 import {
   DropdownMenu,
@@ -35,6 +36,7 @@ function initialsOf(name: string): string {
  */
 export function UserMenu() {
   const { user, role } = useSession();
+  const { mutate: logout, isPending } = useLogout();
 
   if (!user) {
     return (
@@ -73,9 +75,9 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem disabled>
+          <DropdownMenuItem onClick={() => logout()} disabled={isPending}>
             <LogOutIcon aria-hidden="true" />
-            Sign out with the accounts feature
+            {isPending ? "Signing out…" : "Sign out"}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

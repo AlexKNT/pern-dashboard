@@ -12,6 +12,11 @@ import { notificationProvider } from "@/providers/notification-provider";
 import { DashboardPage } from "@/pages/dashboard";
 import { NotFoundPage } from "@/pages/not-found";
 import { SignInPage } from "@/pages/sign-in";
+import { SignUpPage } from "@/pages/sign-up";
+import { VerifyEmailPage } from "@/pages/verify-email";
+import { ClassesPage } from "@/pages/classes";
+import { MyClassesPage } from "@/pages/my-classes";
+import { RosterPage } from "@/pages/roster";
 
 /**
  * A placeholder for a destination the navigation already offers but no feature has
@@ -70,6 +75,22 @@ export function App() {
                 }
               />
               <Route
+                path="/sign-up"
+                element={
+                  <SignInGuard>
+                    <SignUpPage />
+                  </SignInGuard>
+                }
+              />
+              <Route
+                path="/verify-email"
+                element={
+                  <SignInGuard>
+                    <VerifyEmailPage />
+                  </SignInGuard>
+                }
+              />
+              <Route
                 element={
                   <RequireSession>
                     <ShellLayout />
@@ -79,11 +100,12 @@ export function App() {
                 <Route index element={<DashboardPage />} />
                 <Route path="departments" element={<PlaceholderPage title="Departments" />} />
                 <Route path="subjects" element={<PlaceholderPage title="Subjects" />} />
-                <Route path="classes" element={<PlaceholderPage title="Classes" />} />
+                <Route path="classes" element={<ClassesPage />} />
+                <Route path="classes/:id/roster" element={<RosterPage />} />
                 <Route path="schedule" element={<PlaceholderPage title="Schedule" />} />
                 <Route path="people" element={<PlaceholderPage title="People" />} />
                 <Route path="sessions" element={<PlaceholderPage title="My sessions" />} />
-                <Route path="my-classes" element={<PlaceholderPage title="My classes" />} />
+                <Route path="my-classes" element={<MyClassesPage />} />
                 <Route path="audit" element={<PlaceholderPage title="Audit log" />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
