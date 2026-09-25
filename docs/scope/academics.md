@@ -4,10 +4,18 @@ The enrollment thread and the academic structure it hangs from. Each slice adds 
 
 ## Skeleton
 
-### 7. Core enrollment loop · needs a decision
+### 7. Core enrollment loop
 The thin thread through every layer: a person signs in, an admin creates a class with a join code, a student joins with that code, the teacher sees the roster. This slice is the walking skeleton.
 **Done when:** a real account signs in, a created class exposes a join code that works, a student joins with it, and the roster updates for the teacher, on the deployed apps.
-- [ ] Design it (spec): `/architect core enrollment loop`
+- [x] Design it (spec): `/architect core enrollment loop`
+- [ ] Build it: `/develop core enrollment loop`
+  - [ ] Verified sign up and sign in, the seeded admin, and admin created teacher accounts (AC-1, AC-2)
+  - [ ] The data migration: enrollment status, the index swap, and the placeholder subject seed (AC-3)
+  - [ ] Admin creates classes with a teacher, capacity and join code (AC-4)
+  - [ ] Join, leave and the waitlist promotion, plus the roster and my classes reads (AC-5, AC-6, AC-7, AC-8)
+  - [ ] Role guards, rate limiting, and the web screens through the dev proxy (AC-6, AC-9)
+- [ ] Verify it: `/check verify core enrollment loop`
+Spec [0006](../specs/0006-core-enrollment-loop/index.md)
 
 (_basis: Tracer Bullet merges the walking skeleton into the first real slice, so there is no separate throwaway skeleton row. Enrollment rules, such as joining a full class or rejoining after leaving, are behavior a person has to decide, so this needs a spec._)
 
